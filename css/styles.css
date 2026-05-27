@@ -593,7 +593,7 @@ h1.hero-title { font-size: 96px; line-height: .94; font-weight: 900; letter-spac
   h1.hero-title { font-size: 42px; }
   .gallery-hero-title { font-size: 48px; }
   .masonry { column-count: 1; }
-  .photo-strip { grid-template-columns: 1fr; }
+
   .hero-price-badge { display: none; }
   .hero-badge-pill { display: none; }
 }
