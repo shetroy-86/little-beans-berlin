@@ -103,7 +103,6 @@
       filteredPhotos.map((p, i) => `
         <button class="masonry-item" data-photo-idx="${i}" aria-label="View ${p.label}">
           <img src="${p.src}" alt="${p.label}" loading="lazy"/>
-          <span class="img-label" style="color:var(--purple)">${p.label}</span>
           <span class="img-hover-btn">${svgArrowUpRight}</span>
         </button>`).join('') +
       `</div>`;
