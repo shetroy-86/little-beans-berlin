@@ -52,11 +52,14 @@
   const bottomBar = document.querySelector('.mobile-bottom-bar');
   if (bottomBar && window.visualViewport) {
     function pinBar() {
-      const gap = window.innerHeight - (window.visualViewport.offsetTop + window.visualViewport.height);
-      bottomBar.style.bottom = Math.max(0, gap) + 'px';
+      const vv = window.visualViewport;
+      const gap = Math.round(Math.max(0, window.innerHeight - (vv.offsetTop + vv.height)));
+      bottomBar.style.bottom = gap + 'px';
     }
     window.visualViewport.addEventListener('resize', pinBar);
     window.visualViewport.addEventListener('scroll', pinBar);
+    // Chrome iOS fires window.resize when its toolbar shows/hides
+    window.addEventListener('resize', pinBar, { passive: true });
     pinBar();
   }
 })();
