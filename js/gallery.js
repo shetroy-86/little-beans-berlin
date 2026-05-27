@@ -41,11 +41,11 @@
   ];
 
   const TABS = [
-    { id: 'all', label: 'All Photos' },
+    { id: 'all', label: 'All' },
     { id: 'space', label: 'The Space' },
-    { id: 'action', label: 'Little Beans in Action' },
-    { id: 'events', label: 'Special Events' },
-    { id: 'parties', label: 'Birthday Parties' }
+    { id: 'action', label: 'In Action' },
+    { id: 'events', label: 'Events' },
+    { id: 'parties', label: 'Parties' }
   ];
 
   let activeTab = 'all';
@@ -184,5 +184,22 @@
       if (e.key === 'ArrowRight') navLightbox(1);
       if (e.key === 'ArrowLeft') navLightbox(-1);
     });
+
+    // Hide filter bar on scroll down, show on scroll up
+    const filterWrap = document.querySelector('.filter-tabs-wrap');
+    if (filterWrap) {
+      let lastScrollY = window.scrollY;
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y < 80) {
+          filterWrap.classList.remove('filter-hidden');
+        } else if (y > lastScrollY) {
+          filterWrap.classList.add('filter-hidden');
+        } else {
+          filterWrap.classList.remove('filter-hidden');
+        }
+        lastScrollY = y;
+      }, { passive: true });
+    }
   });
 })();
