@@ -541,8 +541,10 @@ h1.hero-title { font-size: 96px; line-height: .94; font-weight: 900; letter-spac
   .tests-grid {
     display: flex !important;
     overflow-x: auto;
+    overflow-y: visible;
     scroll-snap-type: x mandatory;
     gap: 16px;
+    padding-top: 28px;
     padding-bottom: 12px;
     -webkit-overflow-scrolling: touch;
   }
