@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery — Little Beans Play Café · Berlin, Ohio</title>
+  <meta name="description" content="Photos from Little Beans Play Café in Berlin, Ohio — see the play zones, birthday parties, and little beans in action."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <style>
+    /* Filter tabs strip */
+    .filter-tabs-wrap {
+      position: sticky;
+      top: 72px;
+      z-index: 10;
+      background: rgba(255,251,244,.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 24px;
+    }
+    #filterTabs {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .filter-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 20px;
+      border-radius: 999px;
+      border: 2px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .filter-tab:hover {
+      border-color: var(--purple);
+      background: var(--purple-soft);
+    }
+    .filter-tab.active {
+      background: var(--purple);
+      color: #fff;
+      border-color: var(--purple);
+    }
+    .filter-tab .count {
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--purple-soft);
+      color: var(--purple);
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: .02em;
+    }
+    .filter-tab.active .count {
+      background: rgba(255,255,255,.22);
+      color: #fff;
+    }
+    /* Masonry grid */
+    .masonry {
+      column-count: 3;
+      column-gap: 20px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 20px;
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 14px rgba(42,31,61,.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .masonry-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(42,31,61,.14);
+    }
+    .masonry-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 22px;
+    }
+    .img-label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255,255,255,.92);
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      pointer-events: none;
+    }
+    .img-hover-btn {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      background: #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      color: var(--purple);
+      opacity: 0;
+      transition: opacity .2s;
+      pointer-events: none;
+    }
+    .masonry-item:hover .img-hover-btn { opacity: 1; }
+    /* Gallery empty state */
+    .gallery-empty {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--ink-soft);
+      background: var(--cream);
+      border-radius: 28px;
+      border: 2px dashed var(--line);
+    }
+    .gallery-empty .emoji { font-size: 48px; margin-bottom: 12px; }
+    .gallery-empty h3 { font-size: 20px; font-weight: 800; color: var(--ink); margin: 0 0 6px; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .gallery-empty p { margin: 0; font-size: 15px; }
+    /* Lightbox */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(20,12,32,.94);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fadeInLightbox .2s ease;
+    }
+    .lightbox-overlay.hidden { display: none; }
+    @keyframes fadeInLightbox { from { opacity: 0 } to { opacity: 1 } }
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: background .15s;
+      z-index: 3;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,.2); }
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: background .15s;
+      z-index: 3;
+    }
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+    .lightbox-prev:hover,
+    .lightbox-next:hover { background: rgba(255,255,255,.2); }
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 82vh;
+      position: relative;
+      animation: popInLightbox .25s ease;
+    }
+    @keyframes popInLightbox { from { opacity: 0; transform: scale(.96) } to { opacity: 1; transform: scale(1) } }
+    .lightbox-img-wrap img {
+      display: block;
+      max-width: min(900px, 86vw);
+      max-height: 72vh;
+      width: auto;
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+    .lightbox-caption {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      gap: 16px;
+    }
+    .lb-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      letter-spacing: -.01em;
+    }
+    .lb-count {
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,.55);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+    /* Gallery CTAs */
+    .gallery-ctas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .gallery-cta-card {
+      border-radius: 32px;
+      padding: 56px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-cta-dots {
+      position: absolute;
+      inset: 0;
+      opacity: .12;
+      pointer-events: none;
+      background-image: radial-gradient(circle at 12% 18%, #fff 5px, transparent 6px),
+        radial-gradient(circle at 78% 84%, #fff 7px, transparent 8px),
+        radial-gradient(circle at 88% 22%, #fff 4px, transparent 5px),
+        radial-gradient(circle at 28% 70%, #fff 5px, transparent 6px),
+        radial-gradient(circle at 60% 50%, #fff 3px, transparent 4px);
+      background-size: 220px 220px;
+    }
+    .gallery-cta-inner { position: relative; z-index: 2; }
+    @media (max-width: 960px) {
+      .masonry { column-count: 2; }
+      .gallery-ctas { grid-template-columns: 1fr; }
+      .gallery-cta-card { padding: 40px 28px; }
+    }
+    @media (max-width: 480px) {
+      .masonry { column-count: 1; }
+      .filter-tab { font-size: 13px; padding: 9px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Announcement -->
+<div class="announce">
+  <span>Berlin's own indoor play space! · Mon–Fri 9–4, Sat 9–2</span>
+</div>
+
+<!-- Nav -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a class="logo" href="index.html">
+      <img class="logo-img" src="assets/beans-together.png" alt="Little Beans mascots"/>
+      <div>Little Beans<small>Play Café · Berlin OH</small></div>
+    </a>
+    <div class="nav-links">
+      <a href="open-play.html">Open Play</a>
+      <a href="parties.html">Parties</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Visit Us</a>
+    </div>
+    <div class="nav-cta">
+      <button class="btn btn-primary" data-book>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+        Book Open Play
+      </button>
+      <button class="hamburger" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- Gallery Hero -->
+<section class="hero" id="top" style="min-height:auto;padding-bottom:0">
+  <div class="hero-dots dots-bg"></div>
+  <div class="hero-inner" style="padding:64px 24px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0">
+    <div class="eyebrow"><span class="dot"></span> Little Beans Play Café</div>
+    <h1 class="hero-title" style="font-size:clamp(56px,11vw,132px);margin:20px 0 10px">Our <em>space.</em></h1>
+    <p class="hero-sub" style="margin:0;text-align:center">Take a look around.</p>
+  </div>
+</section>
+
+<!-- Filter Tabs (populated by gallery.js) -->
+<div class="filter-tabs-wrap">
+  <div id="filterTabs"></div>
+</div>
+
+<!-- Photo Grid (populated by gallery.js) -->
+<section style="padding:48px 24px 96px;background:var(--cream)">
+  <div style="max-width:1280px;margin:0 auto">
+    <div id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- Gallery CTAs -->
+<section style="padding:96px 24px 120px;background:var(--cream)">
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="gallery-ctas">
+
+      <!-- Visit CTA -->
+      <div class="gallery-cta-card" style="background:var(--purple);color:#fff">
+        <div class="gallery-cta-dots"></div>
+        <div class="gallery-cta-inner">
+          <span class="kicker" style="color:var(--orange);font-weight:900;letter-spacing:.12em;text-transform:uppercase;font-size:13px">Visit</span>
+          <h2 style="font-size:clamp(32px,4vw,44px);margin:12px 0 14px;line-height:1.02;letter-spacing:-.02em;font-weight:900">
+            Come see it <em style="color:var(--orange);font-style:normal">in person.</em>
+          </h2>
+          <p style="font-size:16px;line-height:1.55;color:rgba(255,255,255,.85);margin:0 0 24px;font-weight:500">
+            Photos can only do so much. Stop by during open play and let the kids loose.
+          </p>
+          <a href="contact.html" class="btn btn-primary btn-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Plan Your Visit
+          </a>
+        </div>
+      </div>
+
+      <!-- Parties CTA -->
+      <div class="gallery-cta-card" style="background:var(--orange);color:var(--ink)">
+        <div class="gallery-cta-dots" style="opacity:.14;background-image:radial-gradient(circle at 18% 78%, var(--ink) 5px, transparent 6px),radial-gradient(circle at 82% 22%, var(--ink) 7px, transparent 8px),radial-gradient(circle at 88% 78%, var(--ink) 4px, transparent 5px),radial-gradient(circle at 28% 22%, var(--ink) 5px, transparent 6px),radial-gradient(circle at 50% 50%, var(--ink) 3px, transparent 4px)"></div>
+        <div class="gallery-cta-inner">
+          <span class="kicker" style="color:#4F2C7A;font-weight:900;letter-spacing:.12em;text-transform:uppercase;font-size:13px">Parties</span>
+          <h2 style="font-size:clamp(32px,4vw,44px);margin:12px 0 14px;line-height:1.02;letter-spacing:-.02em;font-weight:900;color:var(--ink)">
+            Book it for a <em style="color:var(--purple);font-style:normal">birthday.</em>
+          </h2>
+          <p style="font-size:16px;line-height:1.55;color:rgba(42,31,61,.78);margin:0 0 24px;font-weight:500">
+            Enjoy 4 hours of the whole place to yourselves. You bring the cake — we'll handle the fun.
+          </p>
+          <a href="parties.html" class="btn btn-secondary btn-lg" style="background:#fff;color:var(--purple);border-color:var(--ink);box-shadow:0 4px 0 var(--ink)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16v-7H4z"/><path d="M4 14c2 2 4 0 6 0s4 2 6 0 4 0 4 0"/><path d="M8 8v3M12 7v4M16 8v3"/><circle cx="8" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="4" r="1" fill="currentColor"/><circle cx="16" cy="5" r="1" fill="currentColor"/></svg>
+            See Party Packages
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a class="logo" href="index.html">
+          <img class="logo-img" src="assets/beans-together.png" alt="Little Beans mascots"/>
+          <div>Little Beans<small>Play Café · Berlin OH</small></div>
+        </a>
+        <p class="blurb">An indoor play space and family café for the tiniest humans in Berlin, Ohio. Built by parents who needed it themselves.</p>
+        <div class="socials">
+          <a href="https://www.instagram.com/lbeansplaycafe" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61575273827910" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h5>Visit</h5>
+        <ul>
+          <li><a href="open-play.html">Open play hours</a></li>
+          <li><a href="open-play.html#pricing">Pricing &amp; passes</a></li>
+          <li><a href="contact.html">Find us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:lilbeansplaycafe@gmail.com">lilbeansplaycafe@gmail.com</a></li>
+          <li><a href="tel:3305216667">(330) 521-6667</a></li>
+          <li><a href="contact.html">5126 W Main St</a></li>
+          <li><a href="contact.html">Berlin, OH 44654</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <span>© 2025 Little Beans Play Café · Made in Holmes County</span>
+      <span>
+        <a href="mailto:lilbeansplaycafe@gmail.com" style="color:inherit">Contact</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile Menu -->
+<div class="mobile-backdrop" style="display:none"></div>
+<div class="mobile-menu">
+  <button class="mclose" aria-label="Close menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+  <a href="open-play.html">Open Play</a>
+  <a href="parties.html">Parties</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="faq.html">FAQ</a>
+  <a href="contact.html">Visit Us</a>
+  <button class="btn btn-primary" data-book>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+    Book Open Play
+  </button>
+</div>
+
+<script src="js/booking.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/gallery.js"></script>
+</body>
+</html>

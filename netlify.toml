@@ -1,0 +1,44 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+  from = "/booking"
+  to = "/open-play.html"
+  status = 301
+
+[[redirects]]
+  from = "/play"
+  to = "/open-play.html"
+  status = 301
+
+[[redirects]]
+  from = "/parties"
+  to = "/parties.html"
+  status = 301
+
+[[redirects]]
+  from = "/gallery"
+  to = "/gallery.html"
+  status = 301
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 301
+
+[[redirects]]
+  from = "/events"
+  to = "/events.html"
+  status = 301

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events — Little Beans Play Café · Berlin, Ohio</title>
+  <meta name="description" content="Upcoming events at Little Beans Play Café in Berlin, Ohio — story times, parent nights out, and special play days."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <style>
+    .events-placeholder {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 80px 24px 96px;
+    }
+    .events-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--purple-soft);
+      color: var(--purple);
+      border-radius: 28px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 28px;
+    }
+    .social-follow {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .social-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(42,31,61,.12); }
+    .social-btn.instagram { background: var(--purple); color: #fff; }
+    .social-btn.facebook { background: var(--ink); color: #fff; }
+    .events-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 960px;
+      margin: 56px auto 0;
+    }
+    .event-type-card {
+      background: #fff;
+      border: 2px solid var(--line);
+      border-radius: 22px;
+      padding: 28px 24px;
+      text-align: left;
+    }
+    .event-type-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+    }
+    .event-type-card h4 { margin: 0 0 8px; font-size: 18px; font-weight: 900; color: var(--ink); }
+    .event-type-card p { margin: 0; font-size: 14px; color: var(--ink-soft); font-weight: 600; line-height: 1.5; }
+    @media (max-width: 960px) {
+      .events-cards { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .events-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Announcement -->
+<div class="announce">
+  <span>Berlin's own indoor play space! · Mon–Fri 9–4, Sat 9–2</span>
+</div>
+
+<!-- Nav -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a class="logo" href="index.html">
+      <img class="logo-img" src="assets/beans-together.png" alt="Little Beans mascots"/>
+      <div>Little Beans<small>Play Café · Berlin OH</small></div>
+    </a>
+    <div class="nav-links">
+      <a href="open-play.html">Open Play</a>
+      <a href="parties.html">Parties</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Visit Us</a>
+    </div>
+    <div class="nav-cta">
+      <button class="btn btn-primary" data-book>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+        Book Open Play
+      </button>
+      <button class="hamburger" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="top" style="min-height:auto;padding-bottom:64px">
+  <div class="hero-dots dots-bg"></div>
+  <div class="hero-inner" style="padding-top:64px">
+    <div class="eyebrow"><span class="dot"></span> What's happening</div>
+    <h1 class="hero-title">What's on at <em>Little Beans.</em></h1>
+    <p class="hero-sub" style="max-width:520px;margin-left:auto;margin-right:auto">Special play days, parent nights out, story times, and more. Follow us on social to be the first to know.</p>
+  </div>
+</section>
+
+<!-- Calendar Placeholder -->
+<section style="padding:64px 24px 96px;background:var(--cream)">
+  <div class="events-placeholder">
+    <div class="events-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+    </div>
+    <h2 style="font-size:clamp(28px,4vw,40px);margin:0 0 16px">Calendar coming soon.</h2>
+    <p style="font-size:17px;color:var(--ink-soft);font-weight:600;line-height:1.6;margin:0">
+      We're building out our events calendar — check back soon! In the meantime, follow us on Instagram and Facebook for announcements on upcoming events, special play days, and parent nights out.
+    </p>
+    <div class="social-follow">
+      <a href="https://www.instagram.com/lbeansplaycafe" target="_blank" rel="noopener" class="social-btn instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        @lbeansplaycafe
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61575273827910" target="_blank" rel="noopener" class="social-btn facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Little Beans on Facebook
+      </a>
+    </div>
+  </div>
+
+  <!-- Event types teaser -->
+  <div class="events-cards">
+    <div class="event-type-card">
+      <div class="event-type-icon" style="background:var(--purple-soft);color:var(--purple)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <h4>Story Time</h4>
+      <p>Cozy read-alouds in the imaginative play zone — perfect for our youngest beans.</p>
+    </div>
+    <div class="event-type-card">
+      <div class="event-type-icon" style="background:var(--orange-soft);color:var(--orange)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h4>Parent's Night Out</h4>
+      <p>Drop off the kids for a few hours of supervised play while you recharge.</p>
+    </div>
+    <div class="event-type-card">
+      <div class="event-type-icon" style="background:var(--teal-soft);color:var(--teal)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <h4>Special Play Days</h4>
+      <p>Seasonal themes, holiday fun, and community events throughout the year.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="cta-dots"></div>
+  <div class="cta-inner">
+    <div>
+      <span class="kicker" style="color:var(--orange)">OPEN EVERY DAY BUT SUNDAY</span>
+      <h2 style="margin-top:10px">You don't need an event — <em>just come play.</em></h2>
+      <p>Open play runs Mon–Fri 9–4 and Saturday 9–2. Walk-ins always welcome.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-primary btn-lg" data-book>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+          Book Open Play
+        </button>
+        <a href="contact.html" class="btn btn-teal btn-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Get directions
+        </a>
+      </div>
+    </div>
+    <div class="cta-mascot">
+      <img src="assets/bean-waving.png" alt="Little Bean waving"/>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a class="logo" href="index.html">
+          <img class="logo-img" src="assets/beans-together.png" alt="Little Beans mascots"/>
+          <div>Little Beans<small>Play Café · Berlin OH</small></div>
+        </a>
+        <p class="blurb">An indoor play space and family café for the tiniest humans in Berlin, Ohio. Built by parents who needed it themselves.</p>
+        <div class="socials">
+          <a href="https://www.instagram.com/lbeansplaycafe" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61575273827910" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h5>Visit</h5>
+        <ul>
+          <li><a href="open-play.html">Open play hours</a></li>
+          <li><a href="open-play.html#pricing">Pricing &amp; passes</a></li>
+          <li><a href="contact.html">Find us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:lilbeansplaycafe@gmail.com">lilbeansplaycafe@gmail.com</a></li>
+          <li><a href="tel:3305216667">(330) 521-6667</a></li>
+          <li><a href="contact.html">5126 W Main St</a></li>
+          <li><a href="contact.html">Berlin, OH 44654</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <span>© 2025 Little Beans Play Café · Made in Holmes County</span>
+      <span><a href="mailto:lilbeansplaycafe@gmail.com" style="color:inherit">Contact</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile Menu -->
+<div class="mobile-backdrop" style="display:none"></div>
+<div class="mobile-menu">
+  <button class="mclose" aria-label="Close menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+  <a href="open-play.html">Open Play</a>
+  <a href="parties.html">Parties</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="faq.html">FAQ</a>
+  <a href="contact.html">Visit Us</a>
+  <button class="btn btn-primary" data-book>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+    Book Open Play
+  </button>
+</div>
+
+<script src="js/booking.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>
