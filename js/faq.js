@@ -16,6 +16,5 @@
     });
   });
 
-  // Open first item by default if any exist
-  if (items.length > 0) items[0].classList.add('open');
+
 })();
