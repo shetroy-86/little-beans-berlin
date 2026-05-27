@@ -487,6 +487,71 @@ h1.hero-title { font-size: 96px; line-height: .94; font-weight: 900; letter-spac
 .faq-section-label { font-size: 12px; font-weight: 900; color: var(--orange); letter-spacing: .12em; text-transform: uppercase; margin: 48px 0 16px; display: block; font-family: 'Plus Jakarta Sans', sans-serif; }
 .faq-section-label:first-child { margin-top: 0; }
 
+/* ---------- Mobile bottom bar ---------- */
+.mobile-bottom-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px 24px;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  gap: 10px;
+  z-index: 30;
+}
+.mobile-bottom-bar .mbb-icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--purple-soft);
+  color: var(--purple);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+.mobile-bottom-bar .mbb-main-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--orange);
+  color: var(--ink);
+  border: none;
+  padding: 13px 20px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 15px;
+  box-shadow: 0 3px 0 #C7821A;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ---------- Mobile testimonials scroll ---------- */
+@media (max-width: 960px) {
+  .tests-grid {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tests-grid::-webkit-scrollbar { display: none; }
+  .tests-grid .test-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+  }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
   .nav-links { display: none; }
@@ -519,6 +584,8 @@ h1.hero-title { font-size: 96px; line-height: .94; font-weight: 900; letter-spac
   .filter-tabs-wrap { top: 65px; }
   .cta-mascot img { max-width: 300px; }
   .cta-mascot { display: none; }
+  .mobile-bottom-bar { display: flex; }
+  body { padding-bottom: 84px; }
 }
 
 @media (max-width: 480px) {
