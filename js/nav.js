@@ -44,4 +44,19 @@
       }
     });
   });
+
+  // iOS Safari: keep bottom bar pinned to visual viewport bottom.
+  // When the browser chrome (address bar + tab bar) is visible, the layout
+  // viewport extends behind it, so position:fixed bottom:0 ends up hidden.
+  // The Visual Viewport API fires on every chrome resize so we can compensate.
+  const bottomBar = document.querySelector('.mobile-bottom-bar');
+  if (bottomBar && window.visualViewport) {
+    function pinBar() {
+      const gap = window.innerHeight - (window.visualViewport.offsetTop + window.visualViewport.height);
+      bottomBar.style.bottom = Math.max(0, gap) + 'px';
+    }
+    window.visualViewport.addEventListener('resize', pinBar);
+    window.visualViewport.addEventListener('scroll', pinBar);
+    pinBar();
+  }
 })();
