@@ -73,10 +73,7 @@
         <h3>Let's pick a time for the wild ones.</h3>
         <p>Let us know you're coming so we can save your spot. Play until you're ready to leave — no time limits. Grown-ups are always free.</p>
       </div>
-      <div class="modal-side-badges">
-        <span>SOCKS REQUIRED</span>
-        <span>AGES 0–7</span>
-      </div>
+
       <div class="modal-side-dots"></div>
     </aside>
     <div class="modal-body" id="modalBody">
