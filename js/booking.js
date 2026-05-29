@@ -1,25 +1,15 @@
 // booking.js — vanilla JS booking modal for Netlify Forms
+// Slot availability can be overridden by sheets.js via window.LBB_BLOCKED_SLOTS
 
 (function () {
-  const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const DAYS   = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-  const WEEKDAY_SLOTS = [
-    { t: '9:00 AM', spots: 8 },
-    { t: '10:00 AM', spots: 5 },
-    { t: '11:00 AM', spots: 2 },
-    { t: '12:00 PM', spots: 0 },
-    { t: '1:00 PM', spots: 6 },
-    { t: '2:00 PM or later', spots: 7 }
-  ];
+  // Default time slots — sheets.js can block individual slots per date
+  const WEEKDAY_SLOTS  = ['9:00am', '10:30am', '12:00pm', '2:00pm'];
+  const SATURDAY_SLOTS = ['9:00am', '10:30am', '12:00pm'];
 
-  const SATURDAY_SLOTS = [
-    { t: '9:00 AM', spots: 6 },
-    { t: '10:00 AM', spots: 4 },
-    { t: '11:00 AM', spots: 2 },
-    { t: '12:00 PM or later', spots: 5 }
-  ];
-
+  // ── Date helpers ──────────────────────────────────────────────────────────
   function generateDates() {
     const dates = [];
     const d = new Date();
@@ -27,9 +17,9 @@
     while (dates.length < 8) {
       if (d.getDay() !== 0) { // skip Sundays
         dates.push({
-          date: new Date(d),
-          dow: DAYS[d.getDay()],
-          num: d.getDate(),
+          date:  new Date(d),
+          dow:   DAYS[d.getDay()],
+          num:   d.getDate(),
           month: MONTHS[d.getMonth()],
           isSat: d.getDay() === 6
         });
@@ -39,7 +29,15 @@
     return dates;
   }
 
-  // State
+  // Returns YYYY-MM-DD for a Date object (used to look up blocked slots)
+  function toDateKey(dateObj) {
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const d = String(dateObj.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
+  // ── State ─────────────────────────────────────────────────────────────────
   let dates = [];
   let state = { dateIdx: 0, slotIdx: 0, kids: 1, babies: 0, optIn: true, submitted: false };
 
@@ -47,21 +45,28 @@
     return dates[state.dateIdx]?.isSat ? SATURDAY_SLOTS : WEEKDAY_SLOTS;
   }
 
+  function getBlockedForDate(dateObj) {
+    if (!dateObj) return {};
+    const key = toDateKey(dateObj);
+    return (window.LBB_BLOCKED_SLOTS || {})[key] || {};
+  }
+
   function calcTotal() {
     const k = state.kids;
     return k > 0 ? 9 + (k - 1) * 8 : 0;
   }
 
-  // SVG icons inline
+  // ── SVG icons ─────────────────────────────────────────────────────────────
   const icons = {
-    x: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>`,
-    check: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg>`,
+    x:       `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>`,
+    check:   `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg>`,
     check20: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg>`,
-    minus: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
-    plus: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+    minus:   `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+    plus:    `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
     sparkle: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z"/><path d="M19 14l.8 2L22 17l-2.2.8L19 20l-.8-2-2.2-1 2.2-.8z"/></svg>`
   };
 
+  // ── Modal HTML ────────────────────────────────────────────────────────────
   function buildModalHTML() {
     return `
 <div class="modal-overlay hidden" id="bookingModalOverlay" role="dialog" aria-modal="true" aria-label="Book Open Play">
@@ -73,7 +78,6 @@
         <h3>Let's pick a time for the wild ones.</h3>
         <p>Let us know you're coming so we can save your spot. Play until you're ready to leave — no time limits. Grown-ups are always free.</p>
       </div>
-
       <div class="modal-side-dots"></div>
     </aside>
     <div class="modal-body" id="modalBody">
@@ -83,6 +87,7 @@
 </div>`;
   }
 
+  // ── Render ────────────────────────────────────────────────────────────────
   function renderModal() {
     const body = document.getElementById('modalBody');
     if (!body) return;
@@ -99,8 +104,15 @@
       return;
     }
 
-    const slots = getSlots();
+    const slots       = getSlots();
     const selectedDate = dates[state.dateIdx];
+    const blocked     = getBlockedForDate(selectedDate?.date);
+
+    // If the currently-selected slot is blocked, find the first available one
+    if (blocked[slots[state.slotIdx]]) {
+      const firstAvail = slots.findIndex(s => !blocked[s]);
+      state.slotIdx = firstAvail >= 0 ? firstAvail : 0;
+    }
     const selectedSlot = slots[Math.min(state.slotIdx, slots.length - 1)];
     const total = calcTotal();
 
@@ -108,10 +120,10 @@
       <form id="bookingForm" name="open-play-booking" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="form-name" value="open-play-booking"/>
         <input name="bot-field" style="display:none"/>
-        <input type="hidden" name="date" id="hiddenDate" value="${selectedDate.dow} ${selectedDate.num} ${selectedDate.month}"/>
-        <input type="hidden" name="time" id="hiddenTime" value="${selectedSlot.t}"/>
-        <input type="hidden" name="kids" id="hiddenKids" value="${state.kids}"/>
-        <input type="hidden" name="babies" id="hiddenBabies" value="${state.babies}"/>
+        <input type="hidden" name="date"            id="hiddenDate"  value="${selectedDate.dow} ${selectedDate.num} ${selectedDate.month}"/>
+        <input type="hidden" name="time"            id="hiddenTime"  value="${selectedSlot}"/>
+        <input type="hidden" name="kids"            id="hiddenKids"  value="${state.kids}"/>
+        <input type="hidden" name="babies"          id="hiddenBabies" value="${state.babies}"/>
         <input type="hidden" name="estimated-total" id="hiddenTotal" value="$${total}"/>
 
         <span class="step-label">Step 1 · Pick a day</span>
@@ -182,7 +194,8 @@
     grid.querySelectorAll('.date-pill').forEach(btn => {
       btn.addEventListener('click', () => {
         state.dateIdx = parseInt(btn.dataset.dateIdx);
-        if (state.slotIdx >= getSlots().length) state.slotIdx = 0;
+        // Reset slot selection when date changes
+        state.slotIdx = 0;
         renderDates();
         renderSlots();
         updateHidden();
@@ -194,14 +207,29 @@
   function renderSlots() {
     const grid = document.getElementById('slotGrid');
     if (!grid) return;
-    const slots = getSlots();
+    const slots   = getSlots();
+    const blocked = getBlockedForDate(dates[state.dateIdx]?.date);
+
+    // Ensure selected index points to an available slot
+    if (blocked[slots[state.slotIdx]]) {
+      const firstAvail = slots.findIndex(s => !blocked[s]);
+      state.slotIdx = firstAvail >= 0 ? firstAvail : 0;
+    }
     const idx = Math.min(state.slotIdx, slots.length - 1);
-    grid.innerHTML = slots.map((s, i) => `
-      <button type="button" class="slot${idx === i ? ' selected' : ''}${s.spots === 0 ? ' full' : ''}"
-        data-slot-idx="${i}" ${s.spots === 0 ? 'disabled' : ''}>
-        ${s.t}
-        <small>${s.spots === 0 ? 'sold out' : s.spots + ' spots left'}</small>
-      </button>`).join('');
+
+    grid.innerHTML = slots.map((s, i) => {
+      const isBlocked  = !!blocked[s];
+      const isSelected = !isBlocked && idx === i;
+      return `
+        <button type="button"
+          class="slot${isSelected ? ' selected' : ''}${isBlocked ? ' full' : ''}"
+          data-slot-idx="${i}"
+          ${isBlocked ? 'disabled' : ''}>
+          ${s}
+          ${isBlocked ? '<small>Unavailable</small>' : ''}
+        </button>`;
+    }).join('');
+
     grid.querySelectorAll('.slot:not(.full)').forEach(btn => {
       btn.addEventListener('click', () => {
         state.slotIdx = parseInt(btn.dataset.slotIdx);
@@ -216,46 +244,44 @@
     const el = document.getElementById('priceSummary');
     if (!el) return;
     const slots = getSlots();
-    const slot = slots[Math.min(state.slotIdx, slots.length - 1)];
-    const d = dates[state.dateIdx];
+    const slot  = slots[Math.min(state.slotIdx, slots.length - 1)];
+    const d     = dates[state.dateIdx];
     const total = calcTotal();
     const walkingCost = state.kids > 0 ? 9 + (state.kids - 1) * 8 : 0;
 
     el.innerHTML = `
       <div class="summary-row"><span>${state.kids} walking bean${state.kids !== 1 ? 's' : ''}</span><span>$${walkingCost}.00</span></div>
       ${state.babies > 0 ? `<div class="summary-row"><span>${state.babies} baby bean${state.babies !== 1 ? 's' : ''}</span><span style="color:var(--teal);font-weight:800;">free</span></div>` : ''}
-      <div class="summary-row"><span>${d.dow} ${d.num} · ${slot.t}</span></div>
+      <div class="summary-row"><span>${d.dow} ${d.num} · ${slot}</span></div>
       <div class="summary-row total"><span>Estimated total</span><span>$${total}.00</span></div>`;
   }
 
   function updateHidden() {
     const slots = getSlots();
-    const slot = slots[Math.min(state.slotIdx, slots.length - 1)];
-    const d = dates[state.dateIdx];
-    const el = id => document.getElementById(id);
-    if (el('hiddenDate')) el('hiddenDate').value = `${d.dow} ${d.num} ${d.month}`;
-    if (el('hiddenTime')) el('hiddenTime').value = slot.t;
-    if (el('hiddenKids')) el('hiddenKids').value = state.kids;
+    const slot  = slots[Math.min(state.slotIdx, slots.length - 1)];
+    const d     = dates[state.dateIdx];
+    const el    = id => document.getElementById(id);
+    if (el('hiddenDate'))   el('hiddenDate').value   = `${d.dow} ${d.num} ${d.month}`;
+    if (el('hiddenTime'))   el('hiddenTime').value   = slot;
+    if (el('hiddenKids'))   el('hiddenKids').value   = state.kids;
     if (el('hiddenBabies')) el('hiddenBabies').value = state.babies;
-    if (el('hiddenTotal')) el('hiddenTotal').value = `$${calcTotal()}`;
-    if (el('kidsVal')) el('kidsVal').textContent = state.kids;
-    if (el('babiesVal')) el('babiesVal').textContent = state.babies;
+    if (el('hiddenTotal'))  el('hiddenTotal').value  = `$${calcTotal()}`;
+    if (el('kidsVal'))      el('kidsVal').textContent  = state.kids;
+    if (el('babiesVal'))    el('babiesVal').textContent = state.babies;
   }
 
   function bindFormEvents() {
     const el = id => document.getElementById(id);
 
-    el('kidsUp')?.addEventListener('click', () => { state.kids = Math.min(8, state.kids + 1); updateHidden(); renderSummary(); });
-    el('kidsDown')?.addEventListener('click', () => { state.kids = Math.max(1, state.kids - 1); updateHidden(); renderSummary(); });
-    el('babiesUp')?.addEventListener('click', () => { state.babies = Math.min(8, state.babies + 1); updateHidden(); });
-    el('babiesDown')?.addEventListener('click', () => { state.babies = Math.max(0, state.babies - 1); updateHidden(); });
+    el('kidsUp')?.addEventListener('click',    () => { state.kids    = Math.min(8, state.kids    + 1); updateHidden(); renderSummary(); });
+    el('kidsDown')?.addEventListener('click',  () => { state.kids    = Math.max(1, state.kids    - 1); updateHidden(); renderSummary(); });
+    el('babiesUp')?.addEventListener('click',  () => { state.babies  = Math.min(8, state.babies  + 1); updateHidden(); });
+    el('babiesDown')?.addEventListener('click',() => { state.babies  = Math.max(0, state.babies  - 1); updateHidden(); });
     el('optIn')?.addEventListener('change', e => { state.optIn = e.target.checked; });
 
     el('bookingForm')?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
-
+      const data = new FormData(e.target);
       try {
         await fetch('/', {
           method: 'POST',
@@ -263,15 +289,14 @@
           body: new URLSearchParams(data).toString()
         });
       } catch (_) {
-        // Still show success — Netlify will handle it on the server
+        // Still show success — Netlify handles it server-side
       }
-
       state.submitted = true;
       renderModal();
     });
   }
 
-  // Public API
+  // ── Public API ────────────────────────────────────────────────────────────
   window.openBookingModal = function () {
     const overlay = document.getElementById('bookingModalOverlay');
     if (!overlay) return;
@@ -289,26 +314,21 @@
     document.body.style.overflow = '';
   };
 
-  // Init after DOM ready
+  // ── Init ──────────────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
-    // Inject modal HTML if not already present
     if (!document.getElementById('bookingModalOverlay')) {
       document.body.insertAdjacentHTML('beforeend', buildModalHTML());
     }
-
-    const overlay = document.getElementById('bookingModalOverlay');
+    const overlay  = document.getElementById('bookingModalOverlay');
     const closeBtn = document.getElementById('modalClose');
 
     closeBtn?.addEventListener('click', closeBookingModal);
     overlay?.addEventListener('click', e => {
       if (e.target === overlay) closeBookingModal();
     });
-
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeBookingModal();
     });
-
-    // Wire booking buttons on the page
     document.querySelectorAll('[data-book]').forEach(btn => {
       btn.addEventListener('click', openBookingModal);
     });
