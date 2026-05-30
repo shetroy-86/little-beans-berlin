@@ -162,6 +162,10 @@
       document.body.insertAdjacentHTML('beforeend', buildLightboxHTML());
     }
 
+    // Pre-select a filter tab if ?filter= is in the URL
+    const urlFilter = new URLSearchParams(location.search).get('filter');
+    if (urlFilter && TABS.some(t => t.id === urlFilter)) activeTab = urlFilter;
+
     filteredPhotos = getFiltered();
     renderTabs();
     renderGrid();
