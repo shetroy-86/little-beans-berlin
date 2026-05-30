@@ -327,7 +327,8 @@ h1.hero-title { font-size: 96px; line-height: .94; font-weight: 900; letter-spac
 .date-pill { padding: 12px 6px; border: 2px solid var(--line); border-radius: 14px; text-align: center; cursor: pointer; transition: .15s; background: #fff; border: none; }
 .date-pill:hover:not(:disabled) { border: 2px solid var(--purple); }
 .date-pill.selected { background: var(--purple); color: #fff; }
-.date-pill:disabled { opacity: .35; cursor: not-allowed; }
+.date-pill:disabled { opacity: .45; cursor: not-allowed; }
+.date-pill.closed small { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); margin-top: 2px; }
 .date-pill .dow { font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-soft); display: block; font-family: 'Plus Jakarta Sans', sans-serif; }
 .date-pill.selected .dow { color: rgba(255,255,255,.7); }
 .date-pill .num { font-size: 20px; font-weight: 900; display: block; font-family: 'Plus Jakarta Sans', sans-serif; }

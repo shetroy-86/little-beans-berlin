@@ -10,31 +10,57 @@
   const SATURDAY_SLOTS = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM or later'];
 
   // ── Date helpers ──────────────────────────────────────────────────────────
+
+  // Returns YYYY-MM-DD for any Date object
+  function toDateKey(dateObj) {
+    return dateObj.getFullYear() + '-' +
+      String(dateObj.getMonth() + 1).padStart(2, '0') + '-' +
+      String(dateObj.getDate()).padStart(2, '0');
+  }
+
+  // Returns YYYY-MM-DD for the Monday of the given date's week
+  function getMondayKey(dateObj) {
+    const dow  = dateObj.getDay();
+    const diff = (dow === 0) ? -6 : 1 - dow;
+    const mon  = new Date(dateObj.getTime() + diff * 86400000);
+    return toDateKey(mon);
+  }
+
+  // Returns true if the given date should show as Closed in the modal.
+  // Default: Sunday is closed. Weekly Hours sheet can close any day.
+  function isDateClosed(dateObj) {
+    const dayKey = ['sun','mon','tue','wed','thu','fri','sat'][dateObj.getDay()];
+    const defaultClosed = (dateObj.getDay() === 0);
+    const allHours = window.LBB_WEEKLY_HOURS_ALL;
+    if (!allHours) return defaultClosed;
+    const weekRow = allHours[getMondayKey(dateObj)];
+    if (!weekRow) return defaultClosed;
+    const val = weekRow[dayKey];
+    if (val && val.trim()) return val.trim().toLowerCase() === 'closed';
+    return defaultClosed;
+  }
+
+  // Generates dates until 8 open ones are found, including closed days so
+  // the calendar looks continuous. Safety cap at 30 calendar days.
   function generateDates() {
     const dates = [];
     const d = new Date();
     d.setHours(0, 0, 0, 0);
-    while (dates.length < 8) {
-      if (d.getDay() !== 0) { // skip Sundays
-        dates.push({
-          date:  new Date(d),
-          dow:   DAYS[d.getDay()],
-          num:   d.getDate(),
-          month: MONTHS[d.getMonth()],
-          isSat: d.getDay() === 6
-        });
-      }
+    let openCount = 0;
+    while (openCount < 8 && dates.length < 30) {
+      const closed = isDateClosed(new Date(d));
+      dates.push({
+        date:   new Date(d),
+        dow:    DAYS[d.getDay()],
+        num:    d.getDate(),
+        month:  MONTHS[d.getMonth()],
+        isSat:  d.getDay() === 6,
+        closed
+      });
+      if (!closed) openCount++;
       d.setDate(d.getDate() + 1);
     }
     return dates;
-  }
-
-  // Returns YYYY-MM-DD for a Date object (used to look up blocked slots)
-  function toDateKey(dateObj) {
-    const y = dateObj.getFullYear();
-    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const d = String(dateObj.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
   }
 
   // ── State ─────────────────────────────────────────────────────────────────
@@ -187,14 +213,17 @@
     const grid = document.getElementById('dateGrid');
     if (!grid) return;
     grid.innerHTML = dates.map((d, i) => `
-      <button type="button" class="date-pill${state.dateIdx === i ? ' selected' : ''}" data-date-idx="${i}">
+      <button type="button"
+        class="date-pill${state.dateIdx === i ? ' selected' : ''}${d.closed ? ' closed' : ''}"
+        data-date-idx="${i}"
+        ${d.closed ? 'disabled' : ''}>
         <span class="dow">${d.dow}</span>
         <span class="num">${d.num}</span>
+        ${d.closed ? '<small>Closed</small>' : ''}
       </button>`).join('');
-    grid.querySelectorAll('.date-pill').forEach(btn => {
+    grid.querySelectorAll('.date-pill:not(:disabled)').forEach(btn => {
       btn.addEventListener('click', () => {
         state.dateIdx = parseInt(btn.dataset.dateIdx);
-        // Reset slot selection when date changes
         state.slotIdx = 0;
         renderDates();
         renderSlots();
@@ -207,6 +236,10 @@
   function renderSlots() {
     const grid = document.getElementById('slotGrid');
     if (!grid) return;
+    if (dates[state.dateIdx]?.closed) {
+      grid.innerHTML = '';
+      return;
+    }
     const slots   = getSlots();
     const blocked = getBlockedForDate(dates[state.dateIdx]?.date);
 
@@ -301,7 +334,8 @@
     const overlay = document.getElementById('bookingModalOverlay');
     if (!overlay) return;
     dates = generateDates();
-    state = { dateIdx: 0, slotIdx: 0, kids: 1, babies: 0, optIn: true, submitted: false };
+    const firstOpen = dates.findIndex(d => !d.closed);
+    state = { dateIdx: firstOpen >= 0 ? firstOpen : 0, slotIdx: 0, kids: 1, babies: 0, optIn: true, submitted: false };
     overlay.classList.remove('hidden');
     renderModal();
     document.body.style.overflow = 'hidden';

@@ -11,18 +11,9 @@
 
   var CACHE_KEY = 'lbb_sheets_v1';
 
-  var DEFAULT_HOURS = {
-    mon: '9:00am – 4:00pm',
-    tue: '9:00am – 4:00pm',
-    wed: '9:00am – 4:00pm',
-    thu: '9:00am – 4:00pm',
-    fri: '9:00am – 4:00pm',
-    sat: '9:00am – 2:00pm',
-    sun: 'Closed'
-  };
-
-  // Expose blocked slots globally so booking.js can read them
-  window.LBB_BLOCKED_SLOTS = {};
+  // Expose sheet data globally so booking.js can read them at modal-open time
+  window.LBB_BLOCKED_SLOTS    = {};
+  window.LBB_WEEKLY_HOURS_ALL = {};
 
   // ── Fetch with sessionStorage cache ─────────────────────────────────────
   function fetchSheetData() {
@@ -50,17 +41,31 @@
     });
   }
 
-  // ── Hours rows — update index.html and open-play.html ───────────────────
-  function updateHours(weeklyHours) {
-    if (!weeklyHours) return;
+  // ── Hours table — update index.html and open-play.html ──────────────────
+  // allWeeklyHours is { "YYYY-MM-DD": { mon, tue, ... } } keyed by Monday.
+  // We find the current week's row and apply it to the .hours-row elements.
+  function updateHours(allWeeklyHours) {
+    if (!allWeeklyHours || typeof allWeeklyHours !== 'object') return;
+
+    var now  = new Date();
+    var dow  = now.getDay();
+    var diff = (dow === 0) ? -6 : 1 - dow;
+    var mon  = new Date(now.getTime() + diff * 86400000);
+    var monStr = mon.getFullYear() + '-' +
+      String(mon.getMonth() + 1).padStart(2, '0') + '-' +
+      String(mon.getDate()).padStart(2, '0');
+
+    var weekRow = allWeeklyHours[monStr];
+    if (!weekRow) return; // No override this week — hardcoded defaults stay
+
     var keyMap = { Mon:'mon', Tue:'tue', Wed:'wed', Thu:'thu', Fri:'fri', Sat:'sat', Sun:'sun' };
     document.querySelectorAll('.hours-row').forEach(function (row) {
-      var dayEl = row.querySelector('.day');
+      var dayEl  = row.querySelector('.day');
       var timeEl = row.querySelector('.time');
       if (!dayEl || !timeEl) return;
       var key = keyMap[dayEl.textContent.trim()];
       if (!key) return;
-      var val = weeklyHours[key];
+      var val = weekRow[key];
       if (val && val.trim()) timeEl.textContent = val.trim();
     });
   }
@@ -71,8 +76,9 @@
       .then(function (data) {
         if (!data) return;
         if (data.announcement_bar) updateAnnouncement(data.announcement_bar);
-        if (data.weekly_hours)    updateHours(data.weekly_hours);
-        if (data.blocked_slots)   window.LBB_BLOCKED_SLOTS = data.blocked_slots;
+        if (data.weekly_hours)     updateHours(data.weekly_hours);
+        if (data.blocked_slots)    window.LBB_BLOCKED_SLOTS    = data.blocked_slots;
+        if (data.weekly_hours)     window.LBB_WEEKLY_HOURS_ALL = data.weekly_hours;
       })
       .catch(function () {
         // Silently fall back — hardcoded defaults remain in place
