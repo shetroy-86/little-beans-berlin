@@ -190,9 +190,12 @@ h1.hero-title { font-size: 96px; line-height: .94; font-weight: 900; letter-spac
 /* ---------- Zones ---------- */
 .zones { padding: 96px 24px; background: var(--purple-soft); position: relative; overflow: hidden; }
 .zone-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-top: 48px; }
-.zone-card { background: var(--white); border-radius: 28px; padding: 30px; position: relative; overflow: hidden; transition: .25s; border: 2px solid transparent; }
+.zone-card { background: var(--white); border-radius: 28px; padding: 30px; position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; border: 2px solid transparent; display: block; text-decoration: none; color: inherit; }
 .zone-card:hover { transform: translateY(-6px); border-color: var(--purple); box-shadow: 0 18px 38px rgba(107,63,160,.18); }
-.zone-card .age { position: absolute; top: 22px; right: 22px; background: var(--orange); color: var(--ink); font-weight: 800; font-size: 12px; padding: 5px 12px; border-radius: 999px; letter-spacing: .04em; font-family: 'Plus Jakarta Sans', sans-serif; }
+.zone-card .zone-photo { margin: -30px -30px 20px; aspect-ratio: 4/3; overflow: hidden; border-radius: 26px 26px 0 0; }
+.zone-card .zone-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.zone-card:hover .zone-photo img { transform: scale(1.04); }
+.zone-card .age { position: absolute; top: 18px; right: 18px; background: var(--orange); color: var(--ink); font-weight: 800; font-size: 12px; padding: 5px 12px; border-radius: 999px; letter-spacing: .04em; font-family: 'Plus Jakarta Sans', sans-serif; z-index: 1; }
 .zone-icon { width: 64px; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
 .zone-icon.purple { background: var(--purple-soft); color: var(--purple); }
 .zone-icon.orange { background: var(--orange-soft); color: var(--orange); }
