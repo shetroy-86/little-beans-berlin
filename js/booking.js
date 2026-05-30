@@ -40,24 +40,21 @@
     return defaultClosed;
   }
 
-  // Generates dates until 8 open ones are found, including closed days so
-  // the calendar looks continuous. Safety cap at 30 calendar days.
+  // Always generates exactly 8 calendar days (today + next 7) so the
+  // date grid fills a tidy 2×4 layout. Closed days appear but are disabled.
   function generateDates() {
     const dates = [];
     const d = new Date();
     d.setHours(0, 0, 0, 0);
-    let openCount = 0;
-    while (openCount < 8 && dates.length < 30) {
-      const closed = isDateClosed(new Date(d));
+    for (let i = 0; i < 8; i++) {
       dates.push({
         date:   new Date(d),
         dow:    DAYS[d.getDay()],
         num:    d.getDate(),
         month:  MONTHS[d.getMonth()],
         isSat:  d.getDay() === 6,
-        closed
+        closed: isDateClosed(new Date(d))
       });
-      if (!closed) openCount++;
       d.setDate(d.getDate() + 1);
     }
     return dates;
