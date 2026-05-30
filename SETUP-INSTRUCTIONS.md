@@ -58,9 +58,9 @@ Set up these column headers in row 1:
 
 Add another new tab and name it **Open Play Schedule**.
 
-Set up these column headers in row 1:
+Set up these column headers in row 1 (copy them exactly — the site matches on these labels):
 
-| Date | 9:00am | 10:30am | 12:00pm | 2:00pm |
+| Date | 9:00 AM | 10:00 AM | 11:00 AM | 12:00 PM | 1:00 PM | 2:00 PM or later |
 
 **How this works:**
 - Alisa only adds a row for dates that have blocked slots (party days, etc.).
@@ -68,13 +68,14 @@ Set up these column headers in row 1:
 - To block a slot, Alisa types anything in that column — `Party` works well.
 - Leave the cell blank if that slot is available.
 - If no row exists for a date, all slots are available.
+- Saturday only has slots through 12:00 PM — the `1:00 PM` and `2:00 PM or later` columns won't appear on Saturdays.
 
 **Example rows:**
 
-| Date | 9:00am | 10:30am | 12:00pm | 2:00pm |
-|---|---|---|---|---|
-| 2026-06-14 | Party | Party | | |
-| 2026-06-21 | | | Party | Party |
+| Date | 9:00 AM | 10:00 AM | 11:00 AM | 12:00 PM | 1:00 PM | 2:00 PM or later |
+|---|---|---|---|---|---|---|
+| 2026-06-14 | Party | Party | | | | |
+| 2026-06-21 | | | | Party | Party | Party |
 
 ---
 

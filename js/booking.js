@@ -6,8 +6,8 @@
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
   // Default time slots — sheets.js can block individual slots per date
-  const WEEKDAY_SLOTS  = ['9:00am', '10:30am', '12:00pm', '2:00pm'];
-  const SATURDAY_SLOTS = ['9:00am', '10:30am', '12:00pm'];
+  const WEEKDAY_SLOTS  = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM or later'];
+  const SATURDAY_SLOTS = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM or later'];
 
   // ── Date helpers ──────────────────────────────────────────────────────────
   function generateDates() {

@@ -67,7 +67,7 @@ function doGet(e) {
     // ── Tab 3: Open Play Schedule ──────────────────────────────────────────
     // Returns a map of { "YYYY-MM-DD": { "9:00am": "blocked", … } }
     // Only dates that have at least one blocked slot appear in the map.
-    // Header row must be: Date | 9:00am | 10:30am | 12:00pm | 2:00pm
+    // Header row must be: Date | 9:00 AM | 10:00 AM | 11:00 AM | 12:00 PM | 1:00 PM | 2:00 PM or later
     try {
       var tz2     = Session.getScriptTimeZone();
       var sSheet  = ss.getSheetByName('Open Play Schedule');

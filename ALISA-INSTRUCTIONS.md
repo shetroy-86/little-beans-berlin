@@ -58,13 +58,13 @@ When you have a private party booked, you might want to hide those time slots fr
 4. In the columns for the time slots you want to block, type anything — `Party` works great.
 5. Leave the other time slots blank if they're still available.
 
-**Example:** You have a party on June 14 that runs from 9am to 11am. You want to block the 9:00am and 10:30am slots but leave 12:00pm and 2:00pm open.
+**Example:** You have a party on June 14 that runs from 9am to 11am. You want to block the 9:00 AM and 10:00 AM slots but leave the rest open.
 
-| Date | 9:00am | 10:30am | 12:00pm | 2:00pm |
-|---|---|---|---|---|
-| 2026-06-14 | Party | Party | | |
+| Date | 9:00 AM | 10:00 AM | 11:00 AM | 12:00 PM | 1:00 PM | 2:00 PM or later |
+|---|---|---|---|---|---|---|
+| 2026-06-14 | Party | Party | | | | |
 
-Anyone trying to book Open Play on June 14 will see 9:00am and 10:30am grayed out with "Unavailable." They can still pick 12:00pm or 2:00pm.
+Anyone trying to book Open Play on June 14 will see 9:00 AM and 10:00 AM grayed out with "Unavailable." They can still pick any of the later slots.
 
 **To unblock a slot:** Just delete the text from that cell (or delete the whole row if all slots are open again).
 
