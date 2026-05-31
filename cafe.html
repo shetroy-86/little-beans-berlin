@@ -321,15 +321,18 @@
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px">
       <div style="display:flex;flex-direction:column;gap:20px">
-        <div class="carry-photo">
+        <div class="carry-photo cafe-lb-trigger" data-src="assets/cafe/snack-counter.png" data-label="Snack counter" style="cursor:pointer;position:relative">
           <img src="assets/cafe/snack-counter.png" alt="Snack counter at Little Beans"/>
+          <span class="img-hover-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg></span>
         </div>
-        <div class="carry-photo">
+        <div class="carry-photo cafe-lb-trigger" data-src="assets/cafe/snacks.png" data-label="Snacks" style="cursor:pointer;position:relative">
           <img src="assets/cafe/snacks.png" alt="Snacks at Little Beans"/>
+          <span class="img-hover-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg></span>
         </div>
       </div>
-      <div class="carry-photo">
+      <div class="carry-photo cafe-lb-trigger" data-src="assets/cafe/refrigerator.png" data-label="Drinks fridge" style="cursor:pointer;position:relative">
         <img src="assets/cafe/refrigerator.png" alt="Cold drinks fridge at Little Beans" style="height:100%;object-fit:cover"/>
+        <span class="img-hover-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg></span>
       </div>
     </div>
   </div>
@@ -433,8 +436,49 @@
   </button>
 </div>
 
+<!-- Lightbox -->
+<div class="lightbox-overlay hidden" id="cafeLightbox">
+  <button class="lightbox-close" id="cafeLbClose" aria-label="Close">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+  <div class="lightbox-content">
+    <div class="lightbox-img-wrap">
+      <img id="cafeLbImg" src="" alt=""/>
+    </div>
+  </div>
+</div>
+
 <script src="js/sheets.js"></script>
 <script src="js/booking.js"></script>
 <script src="js/nav.js"></script>
+<script>
+(function () {
+  const overlay = document.getElementById('cafeLightbox');
+  const img = document.getElementById('cafeLbImg');
+  const closeBtn = document.getElementById('cafeLbClose');
+
+  document.querySelectorAll('.cafe-lb-trigger').forEach(function (el) {
+    el.addEventListener('click', function () {
+      img.src = el.dataset.src;
+      img.alt = el.dataset.label;
+      overlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function close() {
+    overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+}());
+</script>
 </body>
 </html>
