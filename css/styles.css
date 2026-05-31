@@ -80,15 +80,18 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- Nav ---------- */
 .nav-wrap { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.nav { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 24px; padding: 14px 24px; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 22px; color: var(--purple); letter-spacing: -.01em; }
+.nav { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 20px; padding: 12px 24px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 22px; color: var(--purple); letter-spacing: -.01em; flex-shrink: 0; }
 .logo-img { background: transparent; box-shadow: none; border-radius: 0; width: auto; height: 46px; object-fit: contain; display: block; }
 .logo small { display: block; font-size: 11px; font-weight: 700; color: var(--orange); letter-spacing: .14em; text-transform: uppercase; line-height: 1; }
-.nav-links { display: flex; gap: 6px; margin: 0 auto; }
-.nav-links a { padding: 10px 16px; border-radius: 999px; font-weight: 700; color: var(--ink); font-size: 15px; transition: .18s; }
+.nav-links { display: flex; gap: 2px; margin: 0 auto; }
+.nav-links a { padding: 9px 13px; border-radius: 999px; font-weight: 700; color: var(--ink); font-size: 14px; transition: .18s; white-space: nowrap; }
 .nav-links a:hover { background: var(--purple-soft); color: var(--purple); }
 .nav-links a.active { background: var(--purple-soft); color: var(--purple); }
-.nav-cta { display: flex; align-items: center; gap: 10px; }
+.nav-cta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.nav-social { display: flex; align-items: center; gap: 4px; }
+.nav-social-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--purple-soft); color: var(--purple); display: flex; align-items: center; justify-content: center; transition: .18s; text-decoration: none; }
+.nav-social-icon:hover { background: var(--purple); color: #fff; }
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; border-radius: 999px; font-weight: 800; font-size: 15px; transition: transform .15s ease, box-shadow .15s ease, background .15s; cursor: pointer; border: none; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
 .btn-primary { background: var(--orange); color: var(--ink); box-shadow: 0 4px 0 #C7821A; }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #C7821A; }
