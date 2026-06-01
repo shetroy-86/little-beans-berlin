@@ -224,6 +224,11 @@
     }
     .byo-note svg { color: var(--teal); flex-shrink: 0; }
 
+    /* ---- Lightbox trigger icons ---- */
+    .cafe-lb-trigger .img-hover-btn { opacity: 0; transition: opacity .2s; }
+    .cafe-lb-trigger:hover .img-hover-btn { opacity: 1; }
+    @media (hover: none) { .cafe-lb-trigger .img-hover-btn { display: none; } }
+
     /* ---- Responsive ---- */
     @media (max-width: 900px) {
       .cafe-hero-inner { display: flex; flex-direction: column; gap: 0; padding: 48px 20px 56px; }
