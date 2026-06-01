@@ -8,13 +8,19 @@
     if (!btn) return;
 
     btn.addEventListener('click', () => {
+      const scrollY = window.scrollY || window.pageYOffset;
       const isOpen = item.classList.contains('open');
       // Close all
       items.forEach(i => i.classList.remove('open'));
       // Toggle clicked
       if (!isOpen) item.classList.add('open');
-      // Blur to prevent iOS Safari from scrolling the focused button out of view
       btn.blur();
+      // Restore scroll position after iOS Chrome/Safari repositions on focus
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, scrollY);
+        });
+      });
     });
   });
 
