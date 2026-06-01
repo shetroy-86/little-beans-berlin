@@ -70,19 +70,27 @@
     });
   }
 
-  // ── Init ─────────────────────────────────────────────────────────────────
+  // ── Start fetch immediately — don't wait for DOMContentLoaded ───────────
+  // The network request has no DOM dependency; starting it here means it's
+  // already in-flight before the page finishes parsing, shaving off the
+  // DOMContentLoaded delay. DOM manipulation (announce/hours) still waits.
+  var dataPromise = fetchSheetData().catch(function () { return null; });
+
+  // Expose a promise booking.js can await before rendering the modal.
+  // Resolves (with no value) once the global slot/hours objects are populated.
+  window.LBB_SHEETS_READY = dataPromise.then(function (data) {
+    if (!data) return;
+    if (data.blocked_slots) window.LBB_BLOCKED_SLOTS    = data.blocked_slots;
+    if (data.weekly_hours)  window.LBB_WEEKLY_HOURS_ALL = data.weekly_hours;
+  });
+
+  // Apply DOM-dependent updates after DOMContentLoaded
   document.addEventListener('DOMContentLoaded', function () {
-    fetchSheetData()
-      .then(function (data) {
-        if (!data) return;
-        if (data.announcement_bar) updateAnnouncement(data.announcement_bar);
-        if (data.weekly_hours)     updateHours(data.weekly_hours);
-        if (data.blocked_slots)    window.LBB_BLOCKED_SLOTS    = data.blocked_slots;
-        if (data.weekly_hours)     window.LBB_WEEKLY_HOURS_ALL = data.weekly_hours;
-      })
-      .catch(function () {
-        // Silently fall back — hardcoded defaults remain in place
-      });
+    dataPromise.then(function (data) {
+      if (!data) return;
+      if (data.announcement_bar) updateAnnouncement(data.announcement_bar);
+      if (data.weekly_hours)     updateHours(data.weekly_hours);
+    });
   });
 
 })();

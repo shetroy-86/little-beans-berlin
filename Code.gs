@@ -4,6 +4,11 @@
 //  then deploy as a web app (see SETUP-INSTRUCTIONS.md).
 // ============================================================
 
+function safeHour(val) {
+  if (!val || val instanceof Date) return '';
+  return String(val).trim();
+}
+
 function doGet(e) {
   var result = {};
 
@@ -44,14 +49,14 @@ function doGet(e) {
           : String(weekOf).trim();
         if (weekStr) {
           allHrs[weekStr] = {
-            mon:  String(hRow[1] || '').trim(),
-            tue:  String(hRow[2] || '').trim(),
-            wed:  String(hRow[3] || '').trim(),
-            thu:  String(hRow[4] || '').trim(),
-            fri:  String(hRow[5] || '').trim(),
-            sat:  String(hRow[6] || '').trim(),
-            sun:  String(hRow[7] || '').trim(),
-            note: String(hRow[8] || '').trim()
+            mon:  safeHour(hRow[1]),
+            tue:  safeHour(hRow[2]),
+            wed:  safeHour(hRow[3]),
+            thu:  safeHour(hRow[4]),
+            fri:  safeHour(hRow[5]),
+            sat:  safeHour(hRow[6]),
+            sun:  safeHour(hRow[7]),
+            note: safeHour(hRow[8])
           };
         }
       }

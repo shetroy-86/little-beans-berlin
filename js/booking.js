@@ -349,12 +349,24 @@
   window.openBookingModal = function () {
     const overlay = document.getElementById('bookingModalOverlay');
     if (!overlay) return;
-    dates = generateDates();
-    const firstOpen = dates.findIndex(d => !d.closed);
-    state = { dateIdx: firstOpen >= 0 ? firstOpen : 0, slotIdx: 0, kids: 1, babies: 0, optIn: true, submitted: false };
+
+    // Show the modal shell immediately so the user gets instant visual feedback
     overlay.classList.remove('hidden');
-    renderModal();
     document.body.style.overflow = 'hidden';
+
+    // Show a loading state while waiting for sheet data
+    const body = document.getElementById('modalBody');
+    if (body) body.innerHTML = '<div style="padding:48px;text-align:center;color:var(--ink-soft);">Loading…</div>';
+
+    // Wait for sheet data (or give up after 4s) then render with fresh globals
+    const ready  = window.LBB_SHEETS_READY || Promise.resolve();
+    const cutoff = new Promise(function (resolve) { setTimeout(resolve, 4000); });
+    Promise.race([ready, cutoff]).then(function () {
+      dates = generateDates();
+      const firstOpen = dates.findIndex(d => !d.closed);
+      state = { dateIdx: firstOpen >= 0 ? firstOpen : 0, slotIdx: 0, kids: 1, babies: 0, optIn: true, submitted: false };
+      renderModal();
+    });
   };
 
   window.closeBookingModal = function () {
