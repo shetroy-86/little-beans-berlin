@@ -18,11 +18,28 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1.05fr .95fr;
-      gap: 56px;
-      align-items: center;
+      grid-template-rows: auto auto;
+      column-gap: 56px;
+      row-gap: 0;
       padding: 72px 24px 80px;
       position: relative;
       z-index: 2;
+    }
+    .cafe-hero-heading {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: end;
+      padding-bottom: 24px;
+    }
+    .cafe-hero-body {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: start;
+    }
+    .cafe-hero-photo {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      align-self: center;
     }
     .cafe-hero-img {
       width: 100%;
@@ -209,8 +226,10 @@
 
     /* ---- Responsive ---- */
     @media (max-width: 900px) {
-      .cafe-hero-inner { grid-template-columns: 1fr; gap: 32px; padding: 48px 20px 56px; }
-      .cafe-hero-photo { display: none; }
+      .cafe-hero-inner { display: flex; flex-direction: column; gap: 0; padding: 48px 20px 56px; }
+      .cafe-hero-heading { order: 1; padding-bottom: 20px; }
+      .cafe-hero-photo { order: 2; display: block; margin-bottom: 24px; }
+      .cafe-hero-body { order: 3; }
       .cafe-space-grid { grid-template-columns: 1fr; gap: 32px; }
       .carry-grid { grid-template-columns: 1fr; gap: 32px; }
     }
@@ -263,9 +282,14 @@
 <section class="hero" id="top">
   <div class="hero-dots dots-bg dense"></div>
   <div class="cafe-hero-inner">
-    <div>
+    <div class="cafe-hero-heading">
       <div class="eyebrow"><span class="dot"></span> For the grown-ups</div>
       <h1 class="hero-title" style="font-size:clamp(52px,7vw,86px);margin-top:18px">We're here when mom needs a <em>time out.</em></h1>
+    </div>
+    <div class="cafe-hero-photo">
+      <img class="cafe-hero-img" src="assets/cafe/cafe-tables-2.png" alt="The café at Little Beans — clean tables, warm space, clear view of the play area"/>
+    </div>
+    <div class="cafe-hero-body">
       <p class="hero-sub">The café at Little Beans is a place to give the grown-ups a break. Meet a friend and have a real conversation. Keep an eye on the little ones in the play space while you chat, get some work done, or just exist quietly for a minute.</p>
       <div class="hero-meta">
         <div class="item">
@@ -281,9 +305,6 @@
           Adults always free
         </div>
       </div>
-    </div>
-    <div class="cafe-hero-photo">
-      <img class="cafe-hero-img" src="assets/cafe/cafe-tables-2.png" alt="The café at Little Beans — clean tables, warm space, clear view of the play area"/>
     </div>
   </div>
 </section>
