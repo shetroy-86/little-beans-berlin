@@ -13,6 +13,8 @@
       items.forEach(i => i.classList.remove('open'));
       // Toggle clicked
       if (!isOpen) item.classList.add('open');
+      // Blur to prevent iOS Safari from scrolling the focused button out of view
+      btn.blur();
     });
   });
 
