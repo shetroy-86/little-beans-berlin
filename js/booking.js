@@ -40,6 +40,25 @@
     return defaultClosed;
   }
 
+  // Returns the hours label for a date — reads from the Google Sheet if available,
+  // otherwise falls back to site defaults (9–4 weekdays, 9–2 Saturdays).
+  // Alisa can override any day by typing the hours (e.g. "10–2") in the sheet.
+  function getHoursLabel(dateObj) {
+    const dayKey = ['sun','mon','tue','wed','thu','fri','sat'][dateObj.getDay()];
+    const allHours = window.LBB_WEEKLY_HOURS_ALL;
+    if (allHours) {
+      const weekRow = allHours[getMondayKey(dateObj)];
+      if (weekRow) {
+        const val = weekRow[dayKey];
+        if (val && val.trim() && val.trim().toLowerCase() !== 'closed') {
+          return val.trim();
+        }
+      }
+    }
+    // Default hours
+    return dateObj.getDay() === 6 ? '9–2' : '9–4';
+  }
+
   // Always generates exactly 8 calendar days (today + next 7) so the
   // date grid fills a tidy 2×4 layout. Closed days appear but are disabled.
   function generateDates() {
@@ -216,7 +235,7 @@
         ${d.closed ? 'disabled' : ''}>
         <span class="dow">${d.dow}</span>
         <span class="num">${d.num}</span>
-        ${d.closed ? '<small>Closed</small>' : ''}
+        <small>${d.closed ? 'Closed' : getHoursLabel(d.date)}</small>
       </button>`).join('');
     grid.querySelectorAll('.date-pill:not(:disabled)').forEach(btn => {
       btn.addEventListener('click', () => {
