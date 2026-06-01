@@ -580,6 +580,7 @@ h1.hero-title { font-size: 96px; line-height: .94; font-weight: 900; letter-spac
   .cta-inner { grid-template-columns: 1fr; }
   .cta-banner h2 { font-size: 42px; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-top > div:first-child { grid-column: 1 / -1; }
   .modal { flex-direction: column; max-width: 520px; }
   .modal-side { width: 100%; padding: 24px; }
   .hero-split { grid-template-columns: 1fr; }
