@@ -6,7 +6,7 @@
 (function () {
 
   // ── CONFIGURE: paste the Apps Script web app URL here after deployment ──
-  var SHEETS_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+  var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz94Uqtiivbzq1fqyy6yxLaeHABEDwjbkJYykjo2l-JGt-eb5q6DZBNpj0zOrGWUMDN/exec';
   // ────────────────────────────────────────────────────────────────────────
 
   var CACHE_KEY = 'lbb_sheets_v1';
