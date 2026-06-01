@@ -15,7 +15,7 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: var(--white); color: var(--ink); font-family: 'Nunito', system-ui, sans-serif; font-weight: 500; -webkit-font-smoothing: antialiased; }
-body { overflow-x: hidden; }
+body { overflow-x: hidden; overflow-anchor: none; }
 
 h1, h2, h3, h4, h5, h6,
 .hero-title, .section-head h2, .zone-card h3,
