@@ -34,10 +34,15 @@
   }
 
   // ── Announcement bar — update all pages ─────────────────────────────────
+  // Banner starts at opacity:0 in CSS. Only made visible if the sheet
+  // returns non-empty text — no empty purple bar on fetch failure.
   function updateAnnouncement(text) {
     if (!text || !text.trim()) return;
     document.querySelectorAll('.announce span').forEach(function (el) {
       el.textContent = text.trim();
+    });
+    document.querySelectorAll('.announce').forEach(function (el) {
+      el.style.opacity = '1';
     });
   }
 
