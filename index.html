@@ -14,6 +14,20 @@
 </head>
 <body>
 
+<!-- Hidden static form for Netlify form detection (booking modal submits to this) -->
+<form name="open-play-booking" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="open-play-booking"/>
+  <input name="bot-field"/>
+  <input name="date"/>
+  <input name="time"/>
+  <input name="kids"/>
+  <input name="babies"/>
+  <input name="estimated-total"/>
+  <input name="name"/>
+  <input name="email"/>
+  <input type="checkbox" name="email-opt-in"/>
+</form>
+
 <!-- Announcement -->
 <div class="announce">
   <span></span>
