@@ -40,6 +40,14 @@
     return defaultClosed;
   }
 
+  // Converts a full hours string to a compact label for the date pills.
+  // "10:00am – 4:00pm" → "10–4",  "9:00am – 2:00pm" → "9–2"
+  // Falls back to the original value if the pattern doesn't match.
+  function compactHours(val) {
+    const m = val.match(/(\d+)(?::\d+)?\s*(?:am|pm)?\s*[–\-]\s*(\d+)/i);
+    return m ? m[1] + '–' + m[2] : val;
+  }
+
   // Returns the hours label for a date — reads from the Google Sheet if available,
   // otherwise falls back to site defaults (9–4 weekdays, 9–2 Saturdays).
   // Alisa can override any day by typing the hours (e.g. "10–2") in the sheet.
@@ -51,7 +59,7 @@
       if (weekRow) {
         const val = weekRow[dayKey];
         if (val && val.trim() && val.trim().toLowerCase() !== 'closed') {
-          return val.trim();
+          return compactHours(val.trim());
         }
       }
     }
