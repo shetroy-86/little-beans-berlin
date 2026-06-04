@@ -63,10 +63,11 @@
   ];
 
   const TABS = [
-    { id: 'all',    label: 'All' },
-    { id: 'space',  label: 'The Space' },
-    { id: 'cafe',   label: 'The Café' },
-    { id: 'events', label: 'Events' },
+    { id: 'all',     label: 'All' },
+    { id: 'space',   label: 'The Space' },
+    { id: 'cafe',    label: 'The Café' },
+    { id: 'action',  label: 'In Action' },
+    { id: 'events',  label: 'Events' },
     { id: 'parties', label: 'Parties' },
   ];
 
