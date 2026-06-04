@@ -149,11 +149,11 @@ h1.hero-title { font-size: 96px; line-height: .94; font-weight: 900; letter-spac
 .carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s ease; overflow: hidden; }
 .carousel-slide.active { opacity: 1; }
 .carousel-slide-photo { position: absolute; inset: 0; background-color: #3f3a35; background-size: cover; will-change: transform; animation: kenburns 12s ease-out both; animation-play-state: paused; }
-.carousel-slide-photo[data-slide="0"] { background-image: url('../assets/carousel/ball-pit.png'); background-position: 35% 50%; transform-origin: 30% 45%; }
-.carousel-slide-photo[data-slide="1"] { background-image: url('../assets/carousel/kitchen.png'); background-position: 65% 55%; transform-origin: 70% 55%; }
-.carousel-slide-photo[data-slide="2"] { background-image: url('../assets/carousel/magnet-wall.png'); background-position: 50% 68%; transform-origin: 50% 70%; }
-.carousel-slide-photo[data-slide="3"] { background-image: url('../assets/carousel/cozy-fort.png'); background-position: 50% 50%; transform-origin: 50% 50%; }
-.carousel-slide-photo[data-slide="4"] { background-image: url('../assets/carousel/kids-playing.png'); background-position: 50% 40%; transform-origin: 50% 40%; }
+.carousel-slide-photo[data-slide="0"] { background-image: url('../assets/carousel/carousel-01.jpg'); background-position: 35% 50%; transform-origin: 30% 45%; }
+.carousel-slide-photo[data-slide="1"] { background-image: url('../assets/carousel/carousel-02.jpg'); background-position: 65% 55%; transform-origin: 70% 55%; }
+.carousel-slide-photo[data-slide="2"] { background-image: url('../assets/carousel/carousel-03.jpg'); background-position: 50% 68%; transform-origin: 50% 70%; }
+.carousel-slide-photo[data-slide="3"] { background-image: url('../assets/carousel/carousel-04.jpg'); background-position: 50% 50%; transform-origin: 50% 50%; }
+.carousel-slide-photo[data-slide="4"] { background-image: url('../assets/carousel/carousel-05.jpg'); background-position: 50% 40%; transform-origin: 50% 40%; }
 .carousel-slide.active .carousel-slide-photo { animation-play-state: running; }
 @keyframes kenburns { from { transform: scale(1.0); } to { transform: scale(1.12); } }
 .carousel-vignette { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(20,12,6,.55) 0%, rgba(20,12,6,.1) 30%, transparent 55%); pointer-events: none; }

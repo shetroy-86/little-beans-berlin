@@ -1,43 +1,63 @@
 // gallery.js — filter tabs + lightbox for gallery.html
 
 (function () {
-  // Gallery photo data — categories: space, action, events, parties
+  // Gallery photo data — categories: space, action, events
   const PHOTOS = [
-    // The Space
-    { id: 's01', cat: 'space', label: 'The Space', src: 'gallery/space/baby-beans.png' },
-    { id: 's02', cat: 'space', label: 'The Space', src: 'gallery/space/baby-beans-2.png' },
-    { id: 's03', cat: 'space', label: 'The Space', src: 'gallery/space/baby-beans-3.png' },
-    { id: 's04', cat: 'space', label: 'The Space', src: 'gallery/space/baby-beans-4.png' },
-    { id: 's05', cat: 'space', label: 'The Space', src: 'gallery/space/climbing-1.png' },
-    { id: 's06', cat: 'space', label: 'The Space', src: 'gallery/space/climbing-2.png' },
-    { id: 's07', cat: 'space', label: 'The Space', src: 'gallery/space/climbing-3.png' },
-    { id: 's08', cat: 'space', label: 'The Space', src: 'gallery/space/climbing-4.png' },
-    { id: 's09', cat: 'space', label: 'The Space', src: 'gallery/space/climbing-6.png' },
-    { id: 's10', cat: 'space', label: 'The Space', src: 'gallery/space/climbing-7.png' },
-    { id: 's11', cat: 'space', label: 'The Space', src: 'gallery/space/ball-pit-close-up.png' },
-    { id: 's12', cat: 'space', label: 'The Space', src: 'gallery/space/drum-set.png' },
-    { id: 's13', cat: 'space', label: 'The Space', src: 'gallery/space/fort.png' },
-    { id: 's14', cat: 'space', label: 'The Space', src: 'gallery/space/magnet-wall-3.png' },
-    { id: 's15', cat: 'space', label: 'The Space', src: 'gallery/space/market-food.png' },
-    { id: 's16', cat: 'space', label: 'The Space', src: 'gallery/space/puzzle-corner.png' },
-    { id: 's17', cat: 'space', label: 'The Space', src: 'gallery/space/bible-storyboard-2.png' },
-    // Beans in Action
-    { id: 'a01', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/ball-pit.png' },
-    { id: 'a02', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/blow-dry.png' },
-    { id: 'a03', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/climbing-5.png' },
-    { id: 'a04', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/cozy-fort-enhanced.png' },
-    { id: 'a05', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/girls-playing.png' },
-    { id: 'a06', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/jumpin-1.png' },
-    { id: 'a07', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/jumping-2.png' },
-    { id: 'a08', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/jungle-gym-fun.png' },
-    { id: 'a09', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/kids-playing.png' },
-    { id: 'a10', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/magnet-wall-2.png' },
-    { id: 'a11', cat: 'action', label: 'Little Beans in Action', src: 'gallery/action/magnet-wall-4.png' },
-    // Events
-    { id: 'e01', cat: 'events', label: 'Special Events', src: 'gallery/events/hair.png' },
-    // Parties
-    { id: 'p01', cat: 'parties', label: 'Birthday Party', src: 'gallery/parties/birthday-boy.png' },
-    { id: 'p02', cat: 'parties', label: 'Birthday Party', src: 'gallery/parties/birthday-party-family.png' }
+    // The Space (28 photos)
+    { id: 's01', cat: 'space', label: 'The Space', src: 'assets/gallery/space-01.jpg' },
+    { id: 's02', cat: 'space', label: 'The Space', src: 'assets/gallery/space-02.jpg' },
+    { id: 's03', cat: 'space', label: 'The Space', src: 'assets/gallery/space-03.jpg' },
+    { id: 's04', cat: 'space', label: 'The Space', src: 'assets/gallery/space-04.jpg' },
+    { id: 's05', cat: 'space', label: 'The Space', src: 'assets/gallery/space-05.jpg' },
+    { id: 's06', cat: 'space', label: 'The Space', src: 'assets/gallery/space-06.jpg' },
+    { id: 's07', cat: 'space', label: 'The Space', src: 'assets/gallery/space-07.jpg' },
+    { id: 's08', cat: 'space', label: 'The Space', src: 'assets/gallery/space-08.jpg' },
+    { id: 's09', cat: 'space', label: 'The Space', src: 'assets/gallery/space-09.jpg' },
+    { id: 's10', cat: 'space', label: 'The Space', src: 'assets/gallery/space-10.jpg' },
+    { id: 's11', cat: 'space', label: 'The Space', src: 'assets/gallery/space-11.jpg' },
+    { id: 's12', cat: 'space', label: 'The Space', src: 'assets/gallery/space-12.jpg' },
+    { id: 's13', cat: 'space', label: 'The Space', src: 'assets/gallery/space-13.jpg' },
+    { id: 's14', cat: 'space', label: 'The Space', src: 'assets/gallery/space-14.jpg' },
+    { id: 's15', cat: 'space', label: 'The Space', src: 'assets/gallery/space-15.jpg' },
+    { id: 's16', cat: 'space', label: 'The Space', src: 'assets/gallery/space-16.jpg' },
+    { id: 's17', cat: 'space', label: 'The Space', src: 'assets/gallery/space-17.jpg' },
+    { id: 's18', cat: 'space', label: 'The Space', src: 'assets/gallery/space-18.jpg' },
+    { id: 's19', cat: 'space', label: 'The Space', src: 'assets/gallery/space-19.jpg' },
+    { id: 's20', cat: 'space', label: 'The Space', src: 'assets/gallery/space-20.jpg' },
+    { id: 's21', cat: 'space', label: 'The Space', src: 'assets/gallery/space-21.jpg' },
+    { id: 's22', cat: 'space', label: 'The Space', src: 'assets/gallery/space-22.jpg' },
+    { id: 's23', cat: 'space', label: 'The Space', src: 'assets/gallery/space-23.jpg' },
+    { id: 's24', cat: 'space', label: 'The Space', src: 'assets/gallery/space-24.jpg' },
+    { id: 's25', cat: 'space', label: 'The Space', src: 'assets/gallery/space-25.jpg' },
+    { id: 's26', cat: 'space', label: 'The Space', src: 'assets/gallery/space-26.jpg' },
+    { id: 's27', cat: 'space', label: 'The Space', src: 'assets/gallery/space-27.jpg' },
+    { id: 's28', cat: 'space', label: 'The Space', src: 'assets/gallery/space-28.jpg' },
+    // Beans in Action (17 photos)
+    { id: 'a01', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-01.jpg' },
+    { id: 'a02', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-02.jpg' },
+    { id: 'a03', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-03.jpg' },
+    { id: 'a04', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-04.jpg' },
+    { id: 'a05', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-05.jpg' },
+    { id: 'a06', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-06.jpg' },
+    { id: 'a07', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-07.jpg' },
+    { id: 'a08', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-08.jpg' },
+    { id: 'a09', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-09.jpg' },
+    { id: 'a10', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-10.jpg' },
+    { id: 'a11', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-11.jpg' },
+    { id: 'a12', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-12.jpg' },
+    { id: 'a13', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-13.jpg' },
+    { id: 'a14', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-14.jpg' },
+    { id: 'a15', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-15.jpg' },
+    { id: 'a16', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-16.jpg' },
+    { id: 'a17', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-17.jpg' },
+    // Events (7 photos — events-02 is .png)
+    { id: 'e01', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-01.jpg' },
+    { id: 'e02', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-02.png' },
+    { id: 'e03', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-03.jpg' },
+    { id: 'e04', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-04.jpg' },
+    { id: 'e05', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-05.jpg' },
+    { id: 'e06', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-06.jpg' },
+    { id: 'e07', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-07.jpg' },
   ];
 
   const TABS = [
@@ -45,7 +65,6 @@
     { id: 'space', label: 'The Space' },
     { id: 'action', label: 'In Action' },
     { id: 'events', label: 'Events' },
-    { id: 'parties', label: 'Parties' }
   ];
 
   let activeTab = 'all';
