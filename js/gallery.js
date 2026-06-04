@@ -1,9 +1,9 @@
 // gallery.js — filter tabs + lightbox for gallery.html
 
 (function () {
-  // Gallery photo data — categories: space, action, events
+  // Gallery photo data — categories: space, cafe, action, events, parties
   const PHOTOS = [
-    // The Space (28 photos)
+    // The Space (23 photos)
     { id: 's01', cat: 'space', label: 'The Space', src: 'assets/gallery/space-01.jpg' },
     { id: 's02', cat: 'space', label: 'The Space', src: 'assets/gallery/space-02.jpg' },
     { id: 's03', cat: 'space', label: 'The Space', src: 'assets/gallery/space-03.jpg' },
@@ -27,11 +27,12 @@
     { id: 's21', cat: 'space', label: 'The Space', src: 'assets/gallery/space-21.jpg' },
     { id: 's22', cat: 'space', label: 'The Space', src: 'assets/gallery/space-22.jpg' },
     { id: 's23', cat: 'space', label: 'The Space', src: 'assets/gallery/space-23.jpg' },
-    { id: 's24', cat: 'space', label: 'The Space', src: 'assets/gallery/space-24.jpg' },
-    { id: 's25', cat: 'space', label: 'The Space', src: 'assets/gallery/space-25.jpg' },
-    { id: 's26', cat: 'space', label: 'The Space', src: 'assets/gallery/space-26.jpg' },
-    { id: 's27', cat: 'space', label: 'The Space', src: 'assets/gallery/space-27.jpg' },
-    { id: 's28', cat: 'space', label: 'The Space', src: 'assets/gallery/space-28.jpg' },
+    // The Café (5 photos)
+    { id: 'c01', cat: 'cafe', label: 'The Café', src: 'assets/gallery/cafe-01.jpg' },
+    { id: 'c02', cat: 'cafe', label: 'The Café', src: 'assets/gallery/cafe-02.jpg' },
+    { id: 'c03', cat: 'cafe', label: 'The Café', src: 'assets/gallery/cafe-03.jpg' },
+    { id: 'c04', cat: 'cafe', label: 'The Café', src: 'assets/gallery/cafe-04.jpg' },
+    { id: 'c05', cat: 'cafe', label: 'The Café', src: 'assets/gallery/cafe-05.jpg' },
     // Beans in Action (17 photos)
     { id: 'a01', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-01.jpg' },
     { id: 'a02', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-02.jpg' },
@@ -61,10 +62,11 @@
   ];
 
   const TABS = [
-    { id: 'all', label: 'All' },
-    { id: 'space', label: 'The Space' },
-    { id: 'action', label: 'In Action' },
+    { id: 'all',    label: 'All' },
+    { id: 'space',  label: 'The Space' },
+    { id: 'cafe',   label: 'The Café' },
     { id: 'events', label: 'Events' },
+    { id: 'parties', label: 'Parties' },
   ];
 
   let activeTab = 'all';
