@@ -33,7 +33,7 @@
 
     function startAuto() {
       clearInterval(interval);
-      interval = setInterval(() => go(active + 1), 6500);
+      interval = setInterval(() => go(active + 1), 5000);
     }
 
     // Wire dots
