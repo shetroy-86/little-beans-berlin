@@ -23,8 +23,8 @@
     { id: 's17', cat: 'space', label: 'The Space', src: 'assets/gallery/space-17.1.jpg' },
     { id: 's18', cat: 'space', label: 'The Space', src: 'assets/gallery/space-18.1.jpg' },
     { id: 's19', cat: 'space', label: 'The Space', src: 'assets/gallery/space-19.1.jpg' },
-    { id: 's20', cat: 'space', label: 'The Space', src: 'assets/gallery/space-20.jpg?v=2' },
-    { id: 's21', cat: 'space', label: 'The Space', src: 'assets/gallery/space-21.jpg?v=2' },
+    { id: 's20', cat: 'space', label: 'The Space', src: 'assets/gallery/space-20.1.jpg' },
+    { id: 's21', cat: 'space', label: 'The Space', src: 'assets/gallery/space-21.1.jpg' },
     { id: 's22', cat: 'space', label: 'The Space', src: 'assets/gallery/space-22.jpg?v=2' },
     { id: 's23', cat: 'space', label: 'The Space', src: 'assets/gallery/space-23.jpg?v=2' },
     // The Café (5 photos)
