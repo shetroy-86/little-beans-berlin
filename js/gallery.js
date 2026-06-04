@@ -51,14 +51,15 @@
     { id: 'a15', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-15.jpg' },
     { id: 'a16', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-16.jpg' },
     { id: 'a17', cat: 'action', label: 'Little Beans in Action', src: 'assets/gallery/action-17.jpg' },
-    // Events (7 photos — events-02 is .png)
-    { id: 'e01', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-01.jpg' },
-    { id: 'e02', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-02.png' },
-    { id: 'e03', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-03.jpg' },
-    { id: 'e04', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-04.jpg' },
-    { id: 'e05', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-05.jpg' },
-    { id: 'e06', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-06.jpg' },
-    { id: 'e07', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-07.jpg' },
+    // Events (4 photos)
+    { id: 'e01', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-01.1.jpg' },
+    { id: 'e02', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-02.1.jpg' },
+    { id: 'e03', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-03.1.jpg' },
+    { id: 'e04', cat: 'events', label: 'Special Events', src: 'assets/gallery/events-04.1.jpg' },
+    // Parties (3 photos)
+    { id: 'p01', cat: 'parties', label: 'Birthday Party', src: 'assets/gallery/parties-01.jpg' },
+    { id: 'p02', cat: 'parties', label: 'Birthday Party', src: 'assets/gallery/parties-02.png' },
+    { id: 'p03', cat: 'parties', label: 'Birthday Party', src: 'assets/gallery/parties-03.jpg' },
   ];
 
   const TABS = [
